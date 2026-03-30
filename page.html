@@ -1,0 +1,830 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Joonhee Lim — Robotics & Autonomous Driving</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link
+    href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --bg: #faf9f7;
+      --surface: #f3f1ed;
+      --text: #1a1917;
+      --muted: #6b6860;
+      --accent: #2a5caa;
+      --border: #e2dfd8;
+      --tag-bg: #edeae4;
+      --tag-text: #4a4842;
+      --nav-h: 52px;
+      --max-w: 780px;
+      --card-bg: #ffffff;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 17px;
+      line-height: 1.75;
+      color: var(--text);
+      background: var(--bg);
+    }
+
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      height: var(--nav-h);
+      background: rgba(250, 249, 247, 0.9);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 clamp(20px, 5vw, 80px);
+    }
+
+    .nav-name {
+      font-family: 'EB Garamond', serif;
+      font-size: 17px;
+      font-weight: 500;
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 26px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 13.5px;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.18s;
+    }
+
+    .nav-links a:hover {
+      color: var(--text);
+    }
+
+    main {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 0 clamp(20px, 5vw, 40px);
+    }
+
+    section {
+      padding: 40px 0;
+      border-bottom: 1px solid var(--border);
+      animation: fadeUp 0.5s ease both;
+    }
+
+    section:last-child {
+      border-bottom: none;
+    }
+
+    h2 {
+      font-family: 'EB Garamond', serif;
+      font-size: 23px;
+      font-weight: 500;
+      margin-bottom: 32px;
+    }
+
+    /* NEWS */
+    .news-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      font-size: 14.5px;
+      color: #3a3835;
+    }
+
+    .news-list li {
+      padding-left: 14px;
+      position: relative;
+      line-height: 1.6;
+    }
+
+    .news-list li::before {
+      content: '•';
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+      font-size: 16px;
+    }
+
+    .news-list strong {
+      color: var(--text);
+      font-weight: 500;
+      margin-right: 4px;
+    }
+
+    /* HERO */
+    #about {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 48px;
+      align-items: start;
+      padding-top: 80px;
+    }
+
+    .hero-text h1 {
+      font-family: 'EB Garamond', serif;
+      font-size: 40px;
+      font-weight: 500;
+      line-height: 1.2;
+      margin-bottom: 20px;
+      letter-spacing: -0.01em;
+    }
+
+    .hero-text p {
+      color: #3a3835;
+      font-size: 15.5px;
+      margin-bottom: 11px;
+      max-width: 520px;
+    }
+
+    .hero-text p strong {
+      color: var(--text);
+      font-weight: 500;
+    }
+
+    .interests {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 22px;
+    }
+
+    .interest-tag {
+      font-size: 12.5px;
+      color: var(--tag-text);
+      background: var(--tag-bg);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 3px 12px;
+    }
+
+    .hero-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 22px;
+    }
+
+    .hero-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      font-size: 13px;
+      color: var(--muted);
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      text-decoration: none;
+      transition: all 0.18s;
+    }
+
+    .hero-link:hover {
+      color: var(--text);
+      background: var(--tag-bg);
+      border-color: #ccc9c2;
+    }
+
+    .hero-link svg {
+      width: 13px;
+      height: 13px;
+      flex-shrink: 0;
+    }
+
+    .hero-photo {
+      width: 148px;
+      height: 148px;
+      border-radius: 50%;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'EB Garamond', serif;
+      font-size: 52px;
+      color: var(--muted);
+    }
+
+    /* PUBLICATIONS */
+    .pub-note {
+      font-size: 13.5px;
+      color: var(--muted);
+      margin-bottom: 24px;
+      margin-top: -16px;
+    }
+
+    .pub-section-label {
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin: 36px 0 16px;
+      padding-bottom: 8px;
+    }
+
+    .pub-list {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      list-style: none;
+    }
+
+    .service-list {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+    }
+
+    /* Card Style */
+    .pub-item-intl,
+    .pub-item-dom,
+    .patent-item {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .pub-item-intl:hover,
+    .pub-item-dom:hover,
+    .patent-item:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+    }
+
+    .pub-item-intl {
+      display: grid;
+      grid-template-columns: 96px 1fr;
+      gap: 20px;
+      align-items: start;
+    }
+
+    .pub-thumb {
+      width: 96px;
+      height: 72px;
+      border-radius: 6px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      overflow: hidden;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--muted);
+      font-size: 11px;
+      text-align: center;
+      line-height: 1.4;
+      padding: 6px;
+    }
+
+    .pub-info {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    /* Title Hyperlink Style */
+    .pub-title {
+      font-family: 'EB Garamond', serif;
+      font-size: 17px;
+      font-weight: 500;
+      line-height: 1.35;
+    }
+
+    .pub-title a {
+      color: var(--text);
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+
+    .pub-title a:hover {
+      color: var(--accent);
+    }
+
+    .pub-authors {
+      font-size: 13.5px;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    .pub-authors strong {
+      color: var(--text);
+      font-weight: 500;
+    }
+
+    .pub-venue {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 13px;
+      color: var(--accent);
+      font-weight: 500;
+      margin-top: 2px;
+    }
+
+    .venue-badge {
+      font-size: 11.5px;
+      padding: 1px 8px;
+      border-radius: 10px;
+      font-weight: 500;
+    }
+
+    .badge-conf {
+      background: #e8eef8;
+      color: #2a5caa;
+    }
+
+    .badge-journal {
+      background: #eaf3e5;
+      color: #2e6e30;
+    }
+
+    /* PATENTS */
+    .patent-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      list-style: none;
+    }
+
+    .patent-title {
+      font-size: 14.5px;
+      color: var(--text);
+      line-height: 1.5;
+      font-weight: 500;
+    }
+
+    .patent-meta {
+      font-size: 12.5px;
+      color: var(--muted);
+      margin-top: 2px;
+    }
+
+    /* TIMELINE */
+    .timeline {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .timeline-item {
+      display: grid;
+      grid-template-columns: 96px 1fr;
+      gap: 20px;
+      align-items: start;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .timeline-item:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+    }
+
+    .tl-logo {
+      width: 96px;
+      height: 96px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      z-index: 1;
+    }
+
+    .tl-org {
+      font-family: 'EB Garamond', serif;
+      font-size: 17px;
+      font-weight: 500;
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    .tl-org:hover {
+      color: var(--accent);
+    }
+
+    .tl-role {
+      font-size: 13.5px;
+      font-weight: 500;
+      color: var(--muted);
+      margin-top: 2px;
+    }
+
+    .tl-period {
+      font-size: 12.5px;
+      color: #a0a09a;
+      margin-bottom: 10px;
+    }
+
+    .tl-bullets {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .tl-bullets li {
+      font-size: 13.8px;
+      color: #4a4845;
+      line-height: 1.6;
+      padding-left: 14px;
+      position: relative;
+    }
+
+    .tl-bullets li::before {
+      content: '–';
+      position: absolute;
+      left: 0;
+      color: var(--border);
+    }
+
+    /* SERVICE & AWARDS */
+    .service-item,
+    .award-item {
+      display: flex;
+      align-items: baseline;
+      gap: 12px;
+      font-size: 14.5px;
+      padding: 0;
+    }
+
+    .service-year,
+    .award-year {
+      font-size: 12.5px;
+      color: var(--muted);
+      min-width: 36px;
+      flex-shrink: 0;
+    }
+
+    .service-conf,
+    .award-name {
+      flex: 1;
+      color: var(--text);
+    }
+
+    footer {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 40px clamp(20px, 5vw, 40px) 60px;
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    @media (max-width: 600px) {
+      #about {
+        grid-template-columns: 1fr;
+      }
+
+      .pub-item-intl {
+        grid-template-columns: 1fr;
+      }
+
+      .pub-item-intl .pub-thumb {
+        display: none;
+      }
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(14px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <nav>
+    <a href="#about" class="nav-name">Joonhee Lim</a>
+    <ul class="nav-links">
+      <li><a href="#news">News</a></li>
+      <li><a href="#publications">Publications</a></li>
+      <li><a href="#education">Education</a></li>
+      <li><a href="#service">Academic Service</a></li>
+    </ul>
+  </nav>
+
+  <main>
+    <section id="about">
+      <div class="hero-text">
+        <h1>Joonhee Lim</h1>
+        <p>I am a Ph.D. candidate in Robotics at <strong>KAIST</strong>, working in the <strong>Decision & Motion
+            Planning Team</strong> at <a href="https://axelab.kaist.ac.kr/index.php" target="_blank"
+            style="color: var(--accent);"><strong style="color: var(--accent);">AXE Lab</strong></a>, advised by <a
+            href="https://scholar.google.co.kr/citations?user=5DUOqDwZ97gC&hl=en" target="_blank"
+            style="color: var(--accent);">Prof. Dongsuk Kum</a>.</p>
+        <p>My research focuses on <strong>decision-making and motion planning for autonomous vehicles</strong>, with
+          a particular interest in collision avoidance, reinforcement learning, and E2E autonomous driving.</p>
+        <div class="hero-links">
+          <a href="mailto:kingear3@kaist.ac.kr" class="hero-link">kingear3@kaist.ac.kr</a>
+          <a href="https://scholar.google.co.kr/citations?user=7t8CjooAAAAJ&hl=en" target="_blank"
+            class="hero-link">Google Scholar</a>
+          <a href="https://www.linkedin.com/in/joonhee-lim-7a8597239" target="_blank" class="hero-link">LinkedIn</a>
+          <a href="https://jhrobotics.tistory.com/" target="_blank" class="hero-link">Tech Blog</a>
+        </div>
+      </div>
+      <img src="logos/lim.jpg" alt="Joonhee Lim" class="hero-photo" style="object-fit: cover; padding: 0; box-sizing: border-box;">
+    </section>
+
+    <section id="news">
+      <h2>News</h2>
+      <ul class="news-list">
+        <li><strong>[2026.03]</strong> Our paper "Reaction-Uncertainty-Aware Motion Planning for Interactive Driving..." was accepted for publication in <strong>IEEE Access</strong>.</li>
+        <li><strong>[2026.03]</strong> Two papers ("Continual Reinforcement Learning Framework..." and "NPPC...") were accepted for publication in <strong>IEEE RA-L</strong>.</li>
+      </ul>
+    </section>
+
+    <section id="publications">
+      <h2>Publications</h2>
+      <p class="pub-note"><sup>†</sup> Equal Contribution</p>
+
+      <div class="pub-section-label">International Publications</div>
+      <div class="pub-list">
+        <div class="pub-item-intl">
+          <div class="pub-thumb" style="padding: 0;"><img src="figs/planrl.png" alt="PlanRL"
+              style="width: 100%; height: 100%; object-fit: cover;"></div>
+          <div class="pub-info">
+            <div class="pub-title"><a href="#">PlanRL: A Trajectory Planning Architecture for Reinforcement
+                Learning-based Driving Experts</a></div>
+            <div class="pub-authors"><strong>Joonhee Lim</strong><sup>†</sup>, Yongjae Lee<sup>†</sup>, and Dongsuk Kum
+            </div>
+            <div class="pub-venue"><span class="venue-badge badge-conf">Conference</span>IEEE/RSJ IROS 2026 (Under Review)</div>
+          </div>
+        </div>
+        <div class="pub-item-intl">
+          <div class="pub-thumb" style="padding: 0;"><img src="figs/ramp.png" alt="RAMP"
+              style="width: 100%; height: 100%; object-fit: cover;"></div>
+          <div class="pub-info">
+            <div class="pub-title"><a href="#">Reaction-Uncertainty-Aware Motion Planning for Interactive Driving via
+                Conditional Multi-modal Motion Prediction</a></div>
+            <div class="pub-authors">Hanbin Jang, <strong>Joonhee Lim</strong>, Abi Rahman Syamil, and Dongsuk Kum</div>
+            <div class="pub-venue"><span class="venue-badge badge-journal">Journal</span>IEEE Access 2026</div>
+          </div>
+        </div>
+        <div class="pub-item-intl">
+          <div class="pub-thumb" style="padding: 0;"><img src="figs/continual_rl.png" alt="Continual RL"
+              style="width: 100%; height: 100%; object-fit: cover;"></div>
+          <div class="pub-info">
+            <div class="pub-title"><a href="https://ieeexplore.ieee.org/document/11457258">Continual Reinforcement
+                Learning Framework for Scalable Collision Avoidance and Mitigation System with Packing Strategy</a>
+            </div>
+            <div class="pub-authors"><strong>Joonhee Lim</strong>, Jangho Shin, and Dongsuk Kum</div>
+            <div class="pub-venue"><span class="venue-badge badge-journal">Journal</span>IEEE RA-L 2026</div>
+          </div>
+        </div>
+        <div class="pub-item-intl">
+          <div class="pub-thumb" style="padding: 0;"><img src="figs/nppc.png" alt="NPPC"
+              style="width: 100%; height: 100%; object-fit: cover;"></div>
+          <div class="pub-info">
+            <div class="pub-title"><a href="https://ieeexplore.ieee.org/document/11393633">NPPC: Neural Parametric
+                Planning Cost for End-to-End Autonomous Driving</a></div>
+            <div class="pub-authors">Abi Rahman Syamil, <strong>Joonhee Lim</strong>, and Dongsuk Kum</div>
+            <div class="pub-venue"><span class="venue-badge badge-journal">Journal</span>IEEE RA-L 2026</div>
+          </div>
+        </div>
+        <div class="pub-item-intl">
+          <div class="pub-thumb" style="padding: 0;"><img src="figs/shape.png" alt="Shape-Aware Navigation"
+              style="width: 100%; height: 100%; object-fit: cover;"></div>
+          <div class="pub-info">
+            <div class="pub-title"><a href="https://ieeexplore.ieee.org/document/11301336">Shape-Aware End-to-End Robot
+                Navigation with 3D Point Clouds via Sparse Convolution and Batch Normalization for Enhanced Training
+                Efficiency</a></div>
+            <div class="pub-authors">Kangchan Roh, <strong>Joonhee Lim</strong>, Byungjin Ko, and Taejoon Park</div>
+            <div class="pub-venue"><span class="venue-badge badge-conf">Conference</span>ICCAS 2025</div>
+          </div>
+        </div>
+        <div class="pub-item-intl">
+          <div class="pub-thumb" style="padding: 0;"><img src="figs/reocc.png" alt="REOcc"
+              style="width: 100%; height: 100%; object-fit: cover;"></div>
+          <div class="pub-info">
+            <div class="pub-title"><a href="https://ieeexplore.ieee.org/document/11246246">REOcc: Camera-Radar Fusion
+                with Radar Feature Enrichment for 3D Occupancy Prediction</a></div>
+            <div class="pub-authors">Chaehee Song, Sanmin Kim, Hyeonjun Jeong, Juyeb Shin, <strong>Joonhee Lim</strong>,
+              and Dongsuk Kum</div>
+            <div class="pub-venue"><span class="venue-badge badge-conf">Conference</span>IEEE/RSJ IROS 2025</div>
+          </div>
+        </div>
+        <div class="pub-item-intl">
+          <div class="pub-thumb" style="padding: 0;"><img src="figs/learning_terminal.png" alt="Learning Terminal State"
+              style="width: 100%; height: 100%; object-fit: cover;"></div>
+          <div class="pub-info">
+            <div class="pub-title"><a href="https://ieeexplore.ieee.org/abstract/document/10611155">Learning Terminal
+                State of the Trajectory Planner: Application for Collision Scenarios of Autonomous Vehicles</a></div>
+            <div class="pub-authors"><strong>Joonhee Lim</strong>, Kibeom Lee, Jangho Shin, and Dongsuk Kum</div>
+            <div class="pub-venue"><span class="venue-badge badge-conf">Conference</span>IEEE ICRA 2024</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="pub-section-label">Domestic Publications</div>
+      <div class="pub-list">
+        <div class="pub-item-dom">
+          <div class="pub-info">
+            <div class="pub-title"><a href="#">Trajectory Planning-based Reinforcement Learning Expert for Autonomous
+                Driving</a></div>
+            <div class="pub-authors">Yongjae Lee<sup>†</sup>, <strong>Joonhee Lim</strong><sup>†</sup>, and Dongsuk Kum
+            </div>
+            <div class="pub-venue"><span class="venue-badge badge-conf">Conference</span>KSAE Spring Conference 2026 (Under Review)
+            </div>
+          </div>
+        </div>
+        <div class="pub-item-dom">
+          <div class="pub-info">
+            <div class="pub-title"><a href="#">Offline Reward-Guided Trajectory Scoring for Generate-Then-Select
+                Planning in Autonomous Driving</a></div>
+            <div class="pub-authors">Hailemichael Molla<sup>†</sup>, Satyam Mishra<sup>†</sup>, <strong>Joonhee Lim</strong>, and Dongsuk Kum
+            </div>
+            <div class="pub-venue"><span class="venue-badge badge-conf">Conference</span>KSAE Spring Conference 2026 (Under Review)
+            </div>
+          </div>
+        </div>
+        <div class="pub-item-dom">
+          <div class="pub-info">
+            <div class="pub-title"><a href="#">End-to-End Autonomous Driving Research Trends and Future Directions:
+                Focused on Experimental Environments and Evaluation Methods</a></div>
+            <div class="pub-authors">Yongjae Lee, Hanbin Jang, <strong>Joonhee Lim</strong>, and Dongsuk Kum</div>
+            <div class="pub-venue"><span class="venue-badge badge-journal">Journal</span>Transactions of KSAE 2026</div>
+          </div>
+        </div>
+        <div class="pub-item-dom">
+          <div class="pub-info">
+            <div class="pub-title"><a href="https://www.dbpia.co.kr/journal/articleDetail?nodeId=NODE12278787">Scalable Learning Framework for Collision Avoidance and Mitigation System
+                via Continual Reinforcement Learning</a></div>
+            <div class="pub-authors"><strong>Joonhee Lim</strong>, Jangho Shin, and Dongsuk Kum</div>
+            <div class="pub-venue"><span class="venue-badge badge-conf">Conference</span>KSAE Spring Conference 2025
+            </div>
+          </div>
+        </div>
+        <div class="pub-item-dom">
+          <div class="pub-info">
+            <div class="pub-title"><a href="https://www.dbpia.co.kr/journal/articleDetail?nodeId=NODE12058986">Conditional Multi-modal Prediction and Uncertainty-robust Cost Evaluation
+                for Tree Policy Planning in Autonomous Driving</a></div>
+            <div class="pub-authors">Hanbin Jang, <strong>Joonhee Lim</strong>, and Dongsuk Kum</div>
+            <div class="pub-venue"><span class="venue-badge badge-journal">Journal</span>Transactions of KSAE 2025</div>
+          </div>
+        </div>
+        <div class="pub-item-dom">
+          <div class="pub-info">
+            <div class="pub-title"><a href="https://www.dbpia.co.kr/Journal/articleDetail?nodeId=NODE12047090">Collision Scenario Generation using Adversarial Driver Model</a></div>
+            <div class="pub-authors"><strong>Joonhee Lim</strong>, Hanbin Jang, Jangho Shin, and Dongsuk Kum</div>
+            <div class="pub-venue"><span class="venue-badge badge-conf">Conference</span>KSAE Autumn Conference 2024
+            </div>
+          </div>
+        </div>
+        <div class="pub-item-dom">
+          <div class="pub-info">
+            <div class="pub-title"><a href="https://www.dbpia.co.kr/journal/articleDetail?nodeId=NODE11908950">Self-supervised Pretraining of Point Cloud based on Masked Autoencoder
+                for Mobile Robot Navigation</a></div>
+            <div class="pub-authors">Kangchan Roh, <strong>Joonhee Lim</strong>, Byungjin Ko, and Taejoon Park</div>
+            <div class="pub-venue"><span class="venue-badge badge-conf">Conference</span>ICROS 2024</div>
+          </div>
+        </div>
+        <div class="pub-item-dom">
+          <div class="pub-info">
+            <div class="pub-title"><a href="https://www.dbpia.co.kr/journal/articleDetail?nodeId=NODE11491530">Reinforcement Learning-based Trajectory Planning for Integrated Collision
+                Avoidance and Mitigation System</a></div>
+            <div class="pub-authors"><strong>Joonhee Lim</strong>, Kibeom Lee, and Dongsuk Kum</div>
+            <div class="pub-venue"><span class="venue-badge badge-conf">Conference</span>KSAE Spring Conference 2023
+            </div>
+          </div>
+        </div>
+        <div class="pub-item-dom">
+          <div class="pub-info">
+            <div class="pub-title"><a href="#">Customized Unmanned Convenience Store System using Mobile Robot</a></div>
+            <div class="pub-authors"><strong>Joonhee Lim</strong>, Juyeol Park, Minjae Kim, Seongtaek Lim, Kangchan Roh,
+              Seonyoung Kim, and Taejoon Park</div>
+            <div class="pub-venue"><span class="venue-badge badge-conf">Conference</span>KRoC 2022</div>
+          </div>
+        </div>
+        <div class="pub-item-dom">
+          <div class="pub-info">
+            <div class="pub-title"><a href="https://www.dbpia.co.kr/journal/articleDetail?nodeId=NODE10664509">Learning of the Robot's Powder Grip Pose using Reinforcement Learning</a>
+            </div>
+            <div class="pub-authors">Seunghwan Yu, Yoonki Hong, Bumsoo Jeong, <strong>Joonhee Lim</strong>, Jongwan
+              Yoon, Byungjin Ko, and Taejoon Park</div>
+            <div class="pub-venue"><span class="venue-badge badge-conf">Conference</span>KIIT Autumn Conference 2021
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="pub-section-label">Patents</div>
+      <div class="patent-list">
+        <div class="patent-item">
+          <div class="patent-title">Path generation system for vehicular collision avoidance and mitigation</div>
+          <div class="patent-meta">US Patent App. 18/637,004 · 2025</div>
+        </div>
+        <div class="patent-item">
+          <div class="patent-title">Path generation system for collision avoidance and mitigation of an autonomous
+            vehicle</div>
+          <div class="patent-meta">KR Patent App. 10-2023-0182334 · 2023</div>
+        </div>
+        <div class="patent-item">
+          <div class="patent-title">Automatic subdividing system for multiple powder types using collaborative robot and
+            deep learning</div>
+          <div class="patent-meta">KR Patent App. 10-2021-0169471 · 2021</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="education">
+      <h2>Education</h2>
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="tl-logo"><img src="logos/kaist_logo.gif" alt="kaist_logo"
+              style="width:96px;height:96px;border-radius:10px;object-fit:cover;"></div>
+          <div class="tl-body">
+            <a href="#" class="tl-org">KAIST</a>
+            <div class="tl-role">Ph.D. Candidate in Robotics</div>
+            <div class="tl-period">Feb. 2024 – Ongoing</div>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="tl-logo"><img src="logos/kaist_logo.gif" alt="kaist_logo"
+              style="width:96px;height:96px;border-radius:10px;object-fit:cover;"></div>
+          <div class="tl-body">
+            <a href="#" class="tl-org">KAIST</a>
+            <div class="tl-role">M.S. in Robotics <span style="color: var(--accent);">(Early Graduation)</span></div>
+            <div class="tl-period">Aug. 2022 – Feb. 2024</div>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="tl-logo"><img src="logos/hyu_logo.png" alt="hyu_logo"
+              style="width:96px;height:96px;border-radius:10px;object-fit:cover;transform:scale(1.5);"></div>
+          <div class="tl-body">
+            <a href="#" class="tl-org">Hanyang University ERICA</a>
+            <div class="tl-role">B.S. in Robotics <span style="color: var(--accent);">(Early Graduation)</span></div>
+            <div class="tl-period">Mar. 2019 – Aug. 2022</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="service">
+      <h2>Academic Service</h2>
+      <div class="pub-section-label">Reviewer</div>
+      <div class="service-list">
+        <div class="service-item"><span class="service-conf">IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS)</span><span
+            class="service-year">2025-2026</span></div>
+        <div class="service-item"><span class="service-conf">IEEE Transactions on Intelligent Transportation Systems (T-ITS)</span><span
+            class="service-year">2025</span></div>
+        <div class="service-item"><span class="service-conf">International Conference on Control, Automation, and Systems (ICCAS)</span><span
+            class="service-year">2025</span></div>
+        <div class="service-item"><span class="service-conf">IEEE International Conference on Robotics and Automation (ICRA)</span><span
+            class="service-year">2024</span></div>
+      </div>
+      <div class="pub-section-label">Teaching Assistant</div>
+      <div class="service-list">
+        <div class="service-item"><span class="service-conf">MO503: Introduction to Autonomous Vehicles, KAIST</span><span
+            class="service-year">Fall 2025</span></div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>Joonhee Lim · AXE Lab, KAIST · <a href="mailto:kingear3@kaist.ac.kr"
+        style="color:var(--accent);">kingear3@kaist.ac.kr</a></p>
+  </footer>
+
+</body>
+
+</html>
